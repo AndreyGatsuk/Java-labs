@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: distributed-system
+  name: distributed-system
+  namespace: default
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: distributed-system
+  template:
+    metadata:
+      labels:
+        app: distributed-system
+    spec:
+      containers:
+        - name: distributed-system
+          image: pr5
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
